@@ -1,0 +1,41 @@
+{% set name = "Ts-flint" %}
+{% set version = "0.6.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/ts-flint-{{ version }}.tar.gz
+  sha256: 6d5ffbbde3f3700d5342ef32c9e05d1a4bb737e5ef8b74732f3f13d58352023f
+
+build:
+  noarch: python
+  script: {{ PYTHON }} setup.py install --single-version-externally-managed --record=record.txt
+  number: 0
+
+requirements:
+  build:
+    - python
+    - setuptools
+  host:
+    - python
+  run:
+    - python
+    - pandas
+    - pyarrow
+    - py4j
+    - pyspark
+
+test:
+  imports:
+    - ts.flint
+
+about:
+  home: https://pypi.org/project/ts-flint/
+  summary: Distributed time-series analysis on Spark
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - bkreider
